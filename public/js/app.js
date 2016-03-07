@@ -3,7 +3,7 @@
  */
 
 angular
-    .module('weatherViz', ['ngMaterial', 'users'])
+    .module('weatherViz', ['ngMaterial', 'ngRoute', 'appRoutes', 'MainCtrl', 'WeatherCtrl', 'WeatherService'])
     .config(function ($mdThemingProvider, $mdIconProvider) {
         $mdIconProvider
             .defaultIconSet("./assets/svg/avatars.svg", 128)
