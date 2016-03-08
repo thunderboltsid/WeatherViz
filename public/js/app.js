@@ -5,7 +5,5 @@
 angular
     .module('weatherViz', ['ngMaterial', 'ngMdIcons', 'ngRoute', 'appRoutes', 'MainCtrl', 'WeatherCtrl', 'WeatherService'])
     .config(function ($mdThemingProvider) {
-        $mdThemingProvider.theme('default')
-            .primaryPalette('brown')
-            .accentPalette('red');
+        $mdThemingProvider.theme('default');
     });
