@@ -1,9 +1,14 @@
 <a href="/">Home</a>
 <div>
-    <form>
-        <md-input-container>
-            <label>Dataset ID</label>
-            <input type="text" ng-model="dataset_id">
-        </md-input-container>
+    <form id="dataset" name="form" style="display: flex; align-items: center; justify-content: center;">
+        <div layout="column">
+            <md-input-container>
+                <label>Dataset ID</label>
+                <input type="text" ng-model="dataset_id">
+            </md-input-container>
+            <md-button class="md-raised md-primary" ng-click="submit()">
+                <label>Submit</label>
+            </md-button>
+        </div>
     </form>
 </div>

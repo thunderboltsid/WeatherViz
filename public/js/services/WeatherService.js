@@ -6,15 +6,15 @@
 angular.module('WeatherService', []).factory('Weather', ['$http', function($http) {
 
     return {
-        // call to get all weathers
+        // call to get weather
         get : function(id) {
-            return $http.get('/api/weathers/'+id);
+            return $http.get('/api/weather/'+id);
         },
 
 
         // call to POST and create a new weather
         create : function(weatherData) {
-            return $http.post('/api/weathers', weatherData);
+            return $http.post('/api/weather', weatherData);
         }
 
     }
