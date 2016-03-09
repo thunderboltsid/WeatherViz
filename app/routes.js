@@ -59,7 +59,8 @@ module.exports = function (app) {
                 if (err) throw err;
                 console.log("Weather save for dataset: " + weather.dataset_id);
             })
-        })
+        });
+        res.json({dataset_id: dataset._id});
     });
 
     // frontend routes
