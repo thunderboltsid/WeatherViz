@@ -1,20 +1,21 @@
 <!-- public/views/home.html -->
 <div>
-    <form id="csv_data" style="display: flex; align-items: center; justify-content: center;">
+    <form id="csv_data" name="form" style="display: flex; align-items: center; justify-content: center;">
         <div layout="column">
             <label>Upload CSV file here</label>
             <md-input-container>
                 <label>Dataset name</label>
-                <input ng-model="form_data.name" type="text" minlength="4" maxlength="20">
+                <input ng-model="name" type="text" minlength="4" maxlength="20">
             </md-input-container>
-            <input file-input="form_data.csv" id="csv_file" name="csv" type="file" style="opacity: 0">
-            <li ng-repeat="file in form_data.csv">{{ file.name }}</li>
-            <md-button class="md-raised md-fab md-accent" aria-label="csv file">
-                <label for="csv_file" style="display: block; cursor: pointer">
-                    <ng-md-icon icon="file_upload" style="cursor: pointer"></ng-md-icon>
-                </label>
-            </md-button>
-            <md-button class="md-raised md-primary" ng-click="upload()">
+            <!--<input file-input="form_data.csv" id="csv_file" name="csv" type="file" style="opacity: 0">-->
+            <!--<li ng-repeat="file in form_data.csv">{{ file.name }}</li>-->
+            <!--<md-button class="md-raised md-fab md-accent" aria-label="csv file">-->
+                <!--<label for="csv_file" style="display: block; cursor: pointer">-->
+                    <!--<ng-md-icon icon="file_upload" style="cursor: pointer"></ng-md-icon>-->
+                <!--</label>-->
+            <!--</md-button>-->
+            <div class="button" ngf-select ng-model="file" name="file">Select</div>
+            <md-button class="md-raised md-primary" ng-click="submit()">
                 <label>Submit</label>
             </md-button>
         </div>

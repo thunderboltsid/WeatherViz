@@ -10,8 +10,10 @@ var app = express();
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var mongoose = require('mongoose');
+multiparty = require('connect-multiparty');
 
 // configuration ===========================================
+multipartyMiddleware = multiparty();
 
 // config files
 var db = require('./config/db');

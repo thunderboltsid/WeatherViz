@@ -3,7 +3,7 @@
  */
 
 angular
-    .module('weatherVis', ['ngMaterial', 'ngMdIcons', 'ngRoute', 'appRoutes', 'MainCtrl', 'WeatherCtrl', 'WeatherService', 'fileInputDirective'])
+    .module('weatherVis', ['ngMaterial', 'ngMdIcons', 'ngRoute', 'appRoutes', 'ngFileUpload', 'MainCtrl', 'WeatherCtrl', 'WeatherService', 'fileInputDirective' ])
     .config(function ($mdThemingProvider) {
         $mdThemingProvider.theme('default');
     });

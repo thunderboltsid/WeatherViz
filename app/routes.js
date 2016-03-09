@@ -8,6 +8,7 @@
 var Weather = require('./models/weather');
 var Dataset = require('./models/dataset');
 var csv = require('ya-csv');
+var mongoose = require('mongoose');
 
 module.exports = function (app) {
 
@@ -25,9 +26,10 @@ module.exports = function (app) {
     });
 
     // route to handle creating goes here (app.post)
-    app.post('/api/weather', function (req, res) {
+    app.post('/api/weather', multipartyMiddleware, function (req, res) {
         var dataset_name = req.body.name;
-        var dataset_csv = req.files.csv;
+
+        var dataset_csv = req.files.file;
         var reader = csv.createCsvFileReader(dataset_csv.path, {
             'separator': ',',
             'quote': '',
@@ -44,6 +46,7 @@ module.exports = function (app) {
         });
         reader.addListener('data', function (data) {
             var weather = Weather({
+                _id: mongoose.Types.ObjectId(),
                 dataset_id: dataset._id,
                 datetime: new Date(data[0]),
                 pressure: {data:parseFloat(data[1])},
