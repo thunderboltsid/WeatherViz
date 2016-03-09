@@ -10,7 +10,7 @@ var Schema = mongoose.Schema;
 // define our weather model
 // module.exports allows us to pass this to other files when it is called
 var weatherSchema = new Schema({
-    dataset_id: {type: ObjectId},
+    dataset_id: {type: Schema.Types.ObjectId},
     datetime: {type: Date, default: Date.now()},
     pressure: {
         data: {type: Number, default: 1013.25},
