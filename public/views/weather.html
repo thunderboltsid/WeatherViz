@@ -1,6 +1,6 @@
 <a href="/">Home</a>
 <div>
-    <form id="dataset" name="form" style="display: flex; align-items: center; justify-content: center;">
+    <form id="dataset" name="form" style="display: flex; align-items: center; justify-content: center;" ng-hide="visualize">
         <div layout="column">
             <md-input-container>
                 <label>Dataset ID</label>
@@ -11,4 +11,7 @@
             </md-button>
         </div>
     </form>
+    <div ng-show="visualize">
+        <md-card><div id="chart-line-temp"></div></md-card>
+    </div>
 </div>
