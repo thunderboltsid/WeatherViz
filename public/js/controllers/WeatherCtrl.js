@@ -9,17 +9,42 @@ angular.module('WeatherCtrl', ['WeatherService']).controller('WeatherController'
 
     $scope.submit = function(){
         $http.get('/api/weather/'+ $scope.dataset_id).then(function (res) {
-            $scope.data = res;
-            console.log(res);
-            $scope.viz();
+            $scope.viz(res);
         });
     };
 
-    $scope.viz = function(){
-        $scope.data.forEach(function (d) {
-            d.date = parseDate(d.datetime);
+
+    function line_chart_temp(dim){
+        var temp_line_chart = dc.lineChart("#chart-line-temp");
+        var minDate = dim.bottom(2)[0].date;
+        var maxDate = dim.top(1)[0].date;
+        var min_temp_group = dim.group().reduceSum(function (d) {
+            return d.surface_temperature.data;
         });
-        var ndx = crossfilter($scope.data);
+        console.log(minDate);
+        console.log(maxDate);
+        temp_line_chart.width(900).height(450)
+            .dimension(dim)
+            .margins({ top: 10, right: 10, bottom: 20, left: 40 })
+            .transitionDuration(500)
+            .elasticY(true)
+            .brushOn(false)
+            .group(min_temp_group)
+            .x(d3.time.scale().domain([new Date(2015,1,1),maxDate]))
+            .yAxisLabel("Temperature")
+            .title("Temperature Peaks per day");
+        dc.renderAll();
+    }
+
+    $scope.viz = function(res){
+        $scope.visualize = true;
+        data = res.data;
+        console.log(data);
+        data.forEach(function (d) {
+            var temp = new Date(d.datetime);
+            d.date = new Date(temp.getFullYear(), temp.getMonth(), temp.getDate());
+        });
+        var ndx = crossfilter(data);
         var dateDim = ndx.dimension(function(d) {
             return d.date;
         });
@@ -47,8 +72,10 @@ angular.module('WeatherCtrl', ['WeatherService']).controller('WeatherController'
         var battDim = ndx.dimension(function(d){
             return d.battery.data;
         });
+
+
+        line_chart_temp(dateDim);
     };
 
-    var parseDate = d3.time.format("%m%d%Y").parse;
 
 });
