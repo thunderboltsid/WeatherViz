@@ -1,0 +1,15 @@
+/**
+ * Created by Siddharth Shukla on 3/9/16.
+ */
+
+angular.module('fileInputDirective', []).directive('fileInput', ['$parse', function($parse){
+    return {
+        restrict: 'A',
+        link: function(scope, elm, attrs){
+            elm.bind('change', function(){
+                $parse(attrs.fileInput).assign(scope, elm[0].files);
+                scope.$apply();
+            });
+        }
+    }
+}]);

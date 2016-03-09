@@ -1,1 +1,21 @@
-
+<!-- public/views/home.html -->
+<div>
+    <form id="csv_data" style="display: flex; align-items: center; justify-content: center;">
+        <div layout="column">
+            <label>Upload CSV file here</label>
+            <md-input-container>
+                <label>Dataset name</label>
+                <input ng-model="form_data.name" type="text" minlength="4" maxlength="20">
+            </md-input-container>
+            <input file-input="files" id="csv_file" type="file" style="opacity: 1">
+            <md-button class="md-raised md-primary" aria-label="csv file">
+                <label for="csv_file" style="display: block; cursor: pointer">
+                    <ng-md-icon icon="file_upload" style="cursor: pointer"></ng-md-icon>
+                </label>
+            </md-button>
+            <md-button class="md-raised md-primary" ng-click="upload()">
+                <label>Submit</label>
+            </md-button>
+        </div>
+    </form>
+</div>
