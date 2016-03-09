@@ -16,11 +16,11 @@ module.exports = function (app) {
     // authentication routes
 
     // api route GET weather data
-    app.get('/api/weather', function (req, res) {
-        Weather.find(function (err, weather) {
+    app.get('/api/weather/:id', function (req, res) {
+        Weather.find({'dataset_id': req.params.id}, function (err, weathers) {
             if (err)
                 res.send(err);
-            res.json(weather); // return all weather data in JSON format
+            res.json(weathers); // return all weather data in JSON format
         });
     });
 
