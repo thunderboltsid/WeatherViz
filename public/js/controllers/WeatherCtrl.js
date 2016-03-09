@@ -3,6 +3,6 @@
  */
 
 // public/js/controllers/WeatherCtrl.js
-angular.module('WeatherCtrl', []).controller('WeatherController', function($scope) {
+angular.module('WeatherCtrl', ['WeatherService']).controller('WeatherController', function($scope) {
     $scope.tagline = 'Let us visualize your stuff';
 });

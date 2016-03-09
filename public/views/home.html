@@ -7,7 +7,7 @@
                 <label>Dataset name</label>
                 <input ng-model="form_data.name" type="text" minlength="4" maxlength="20">
             </md-input-container>
-            <input file-input="form_data.csv" id="csv_file" type="file" style="opacity: 0">
+            <input file-input="form_data.csv" id="csv_file" name="csv" type="file" style="opacity: 0">
             <li ng-repeat="file in form_data.csv">{{ file.name }}</li>
             <md-button class="md-raised md-fab md-accent" aria-label="csv file">
                 <label for="csv_file" style="display: block; cursor: pointer">
