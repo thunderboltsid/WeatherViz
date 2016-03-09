@@ -7,20 +7,16 @@ angular.module('WeatherService', []).factory('Weather', ['$http', function($http
 
     return {
         // call to get all weathers
-        get : function() {
-            return $http.get('/api/weathers');
+        get : function(id) {
+            return $http.get('/api/weathers/'+id);
         },
 
 
         // call to POST and create a new weather
         create : function(weatherData) {
             return $http.post('/api/weathers', weatherData);
-        },
-
-        // call to DELETE a weather
-        delete : function(id) {
-            return $http.delete('/api/weathers/' + id);
         }
+
     }
 
 }]);
