@@ -3,29 +3,38 @@
  */
 
 // public/js/controllers/WeatherCtrl.js
-angular.module('WeatherCtrl', ['WeatherService']).controller('WeatherController', function($scope, $http) {
+angular.module('WeatherCtrl', ['WeatherService']).controller('WeatherController', function ($scope, $http) {
     $scope.tagline = 'Let us visualize your stuff';
     $scope.visualize = false;
 
-    $scope.submit = function(){
-        $http.get('/api/weather/'+ $scope.dataset_id).then(function (res) {
+    $scope.submit = function () {
+        $http.get('/api/weather/' + $scope.dataset_id).then(function (res) {
             $scope.viz(res);
         });
     };
 
 
-    function line_chart_temp(dim, grp){
+    function line_chart_temp(dim, grp) {
         var temp_line_chart = dc.lineChart("#chart-line-temp");
         var minDate = dim.bottom(2)[0].date;
         var maxDate = dim.top(1)[0].date;
         temp_line_chart.width(800).height(400)
             .dimension(dim)
-            .margins({ top: 10, right: 10, bottom: 20, left: 40 })
+            .margins({top: 10, right: 10, bottom: 20, left: 40})
             .transitionDuration(500)
             .elasticY(true)
             .brushOn(false)
             .group(grp)
-            .x(d3.time.scale().domain([minDate,maxDate]))
+            //.valueAccessor(function (d) {
+            //    return d.value.min ? d.value.min : 0;
+            //})
+            //.valueAccessor(function (d) {
+            //    return d.value.max ? d.value.max : 0;
+            //})
+            //.valueAccessor(function (d) {
+            //    return d.value.median ? d.value.median : 0;
+            //})
+            .x(d3.time.scale().domain([minDate, maxDate]))
             .y(d3.scale.linear().domain([]))
             .yAxisLabel("Temperature")
             .xAxisLabel("Date")
@@ -33,7 +42,7 @@ angular.module('WeatherCtrl', ['WeatherService']).controller('WeatherController'
         dc.renderAll();
     }
 
-    $scope.viz = function(res){
+    $scope.viz = function (res) {
         $scope.visualize = true;
         data = res.data;
         console.log(data);
@@ -42,42 +51,52 @@ angular.module('WeatherCtrl', ['WeatherService']).controller('WeatherController'
             d.date = new Date(temp.getFullYear(), temp.getMonth(), temp.getDate());
         });
         var ndx = crossfilter(data);
-        var dateDim = ndx.dimension(function(d) {
-            return d.date;
+        var all = ndx.groupAll();
+        var dateDim = ndx.dimension(function (d) {
+            return new Date(d.datetime);
         });
-        var presDim = ndx.dimension(function(d){
+        var dateGrp = dateDim.group().reduceSum(function(d){return d.surface_temperature.data;});
+        //reductio().min(function (d) {
+        //        return d.surface_temperature;
+        //    })
+        //    .max(function (d) {
+        //        return d.surface_temperature;
+        //    })
+        //    .median(function (d) {
+        //        return d.surface_temperature;
+        //    })
+        //    (dateGrp);
+
+        var presDim = ndx.dimension(function (d) {
             return d.pressure.data;
         });
-        var rainDim = ndx.dimension(function(d){
+        var rainDim = ndx.dimension(function (d) {
             return d.rainfall.data;
         });
-        var rhumDim = ndx.dimension(function(d){
+        var rhumDim = ndx.dimension(function (d) {
             return d.relative_humidity.data;
         });
-        var solDim = ndx.dimension(function(d){
+        var solDim = ndx.dimension(function (d) {
             return d.solar_flux.data;
         });
-        var tempDim = ndx.dimension(function(d){
+        var tempDim = ndx.dimension(function (d) {
             return d.solar_flux.data;
         });
-        var windDim = ndx.dimension(function(d){
+        var windDim = ndx.dimension(function (d) {
             return d.wind.data;
         });
-        var winddDim = ndx.dimension(function(d){
+        var winddDim = ndx.dimension(function (d) {
             return d.wind_direction.data;
         });
-        var battDim = ndx.dimension(function(d){
+        var battDim = ndx.dimension(function (d) {
             return d.battery.data;
         });
         var min_temp_group = dateDim.group().reduceSum(function (d) {
             return d.surface_temperature.data;
         });
 
-        line_chart_temp(dateDim, min_temp_group);
+        line_chart_temp(dateDim, dateGrp);
     };
-
-
-
 
 
 });
