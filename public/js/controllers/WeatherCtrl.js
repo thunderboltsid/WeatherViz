@@ -14,20 +14,17 @@ angular.module('WeatherCtrl', ['WeatherService']).controller('WeatherController'
     };
 
 
-    function line_chart_temp(dim){
+    function line_chart_temp(dim, grp){
         var temp_line_chart = dc.lineChart("#chart-line-temp");
         var minDate = dim.bottom(2)[0].date;
         var maxDate = dim.top(1)[0].date;
-        var min_temp_group = dim.group().reduceSum(function (d) {
-            return d.surface_temperature.data;
-        });
         temp_line_chart.width(800).height(400)
             .dimension(dim)
             .margins({ top: 10, right: 10, bottom: 20, left: 40 })
             .transitionDuration(500)
             .elasticY(true)
             .brushOn(false)
-            .group(min_temp_group)
+            .group(grp)
             .x(d3.time.scale().domain([minDate,maxDate]))
             .y(d3.scale.linear().domain([]))
             .yAxisLabel("Temperature")
@@ -72,8 +69,11 @@ angular.module('WeatherCtrl', ['WeatherService']).controller('WeatherController'
         var battDim = ndx.dimension(function(d){
             return d.battery.data;
         });
+        var min_temp_group = dateDim.group().reduceSum(function (d) {
+            return d.surface_temperature.data;
+        });
 
-        line_chart_temp(dateDim);
+        line_chart_temp(dateDim, min_temp_group);
     };
 
 
