@@ -21,17 +21,17 @@ angular.module('WeatherCtrl', ['WeatherService']).controller('WeatherController'
         var min_temp_group = dim.group().reduceSum(function (d) {
             return d.surface_temperature.data;
         });
-        console.log(minDate);
-        console.log(maxDate);
-        temp_line_chart.width(900).height(450)
+        temp_line_chart.width(800).height(400)
             .dimension(dim)
             .margins({ top: 10, right: 10, bottom: 20, left: 40 })
             .transitionDuration(500)
             .elasticY(true)
             .brushOn(false)
             .group(min_temp_group)
-            .x(d3.time.scale().domain([new Date(2015,1,1),maxDate]))
+            .x(d3.time.scale().domain([minDate,maxDate]))
+            .y(d3.scale.linear().domain([]))
             .yAxisLabel("Temperature")
+            .xAxisLabel("Date")
             .title("Temperature Peaks per day");
         dc.renderAll();
     }
@@ -73,9 +73,11 @@ angular.module('WeatherCtrl', ['WeatherService']).controller('WeatherController'
             return d.battery.data;
         });
 
-
         line_chart_temp(dateDim);
     };
+
+
+
 
 
 });
